@@ -1,8 +1,17 @@
-from sys import stdin
-from itertools import permutations
-input = stdin.readline
-
+# Backtracking
+# N과 M(1)
 N, M = map(int, input().split())
-lists = list(permutations(range(1, N + 1), M))
-for list in lists:
-    print(' '.join(map(str, list)))
+
+s = []
+def backtracking():
+    if len(s) == M:
+        print(' '.join(map(str, s)))
+        return
+    for i in range(1, N + 1):
+        if i in s:
+            continue
+        s.append(i)
+        backtracking()
+        s.pop()
+
+backtracking()
