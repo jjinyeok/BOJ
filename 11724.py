@@ -1,23 +1,21 @@
 from sys import stdin
 from collections import deque
 
-input = stdin.readline
-N, M = map(int, input().split())
-
-visited = [False] * (N + 1)
-visited[0] = True
-
-arr = [[] for _ in range(N + 1)]
-for i in range(M):
+# input
+n, m = map(int, stdin.readline().split())
+visited = [False] * (n + 1)
+arr = [[] for _ in range(n + 1)]
+for i in range(m):
     x, y = map(int, input().split())
     arr[x].append(y)
     arr[y].append(x)
 
-result = []
+# bfs : for finding connecting elements
 def bfs(start):
+    result = False
     queue = deque()
     if visited[start] == False:
-        result.append(1)
+        result = True
     queue.append(start)
     while queue:
         x = queue.popleft()
@@ -25,8 +23,13 @@ def bfs(start):
             if visited[i] == False:
                 visited[i] = True
                 queue.append(i)
+    return result
 
-for i in range(1, N + 1):
-    bfs(i)
+# running full node bfs
+answer = 0
+for i in range(1, n + 1):
+    if bfs(i):
+        answer += 1
 
-print(result.count(1))
+# output
+print(answer)
